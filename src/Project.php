@@ -13,9 +13,17 @@ class Project
      * An associative array [string => PhpDocument]
      * that maps URIs to loaded PhpDocuments
      *
-     * @var array
+     * @var PhpDocument[]
      */
     private $documents;
+
+    /**
+     * An associative array [string => PhpDocument]
+     * that maps fully qualified symbol names to loaded PhpDocuments
+     *
+     * @var PhpDocument[]
+     */
+    private $definitions;
 
     /**
      * Instance of the PHP parser
@@ -63,7 +71,7 @@ class Project
     public function findSymbols(string $query)
     {
         $queryResult = [];
-        foreach($this->documents as $uri => $document) {
+        foreach ($this->documents as $uri => $document) {
             $queryResult = array_merge($queryResult, $document->findSymbols($query));
         }
         return $queryResult;
